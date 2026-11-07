@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow" data-publish>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Разработчик чат-ботов и автоматизации с ИИ на n8n – Винера Николаева</title>
+<meta name="description" content="Чат-боты в Telegram, ВКонтакте и MAX на n8n, оплата в боте через ЮKassa, ИИ-ассистент по документам (RAG), секретарь через MCP, контент-завод с ИИ-аватаром HeyGen. Портфолио Винеры Николаевой.">
+<meta name="keywords" content="разработчик чат-ботов, n8n, автоматизация с ИИ, Telegram-бот, бот ВКонтакте, бот MAX, ЮKassa в боте, RAG, MCP, ИИ-агенты, HeyGen, автопостинг">
+<meta property="og:title" content="Чат-боты и автоматизация с ИИ – Винера Николаева">
+<meta property="og:description" content="Боты на n8n в Telegram, ВКонтакте и MAX, оплата по СБП, ИИ по документам, ролики и посты по расписанию.">
+<link rel="icon" href="assets/znak.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#0B1714; --soft:#13261F; --deep:#0F201A; --line:#22382F;
+  --ink:#E8F2EE; --ink-2:#A9BCB4; --ink-3:#7F938B;
+  --accent:#4CC9A0; --emerald:#0E6B56; --peach:#FF9E7A; --mint:#DDF3EA;
+  --r:10px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 18px/1.6 "PT Sans",system-ui,sans-serif;overflow-x:hidden}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--peach);outline-offset:3px;border-radius:6px}
+h1,h2,h3{font-family:Rubik,system-ui,sans-serif;margin:0;line-height:1.12;hyphens:none;-webkit-hyphens:none;overflow-wrap:normal;word-break:keep-all;text-wrap:balance}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+p{margin:0}
+
+/* шапка */
+.top{position:sticky;top:0;z-index:20;background:rgba(11,23,20,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
+.brand img{width:44px;height:44px;flex:none}
+.brand b{display:block;font:800 22px/1.05 Rubik,sans-serif;letter-spacing:-.01em}
+.brand small{display:block;color:var(--ink-3);font-size:14px;line-height:1.3;margin-top:3px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 22px;border-radius:var(--r);font:700 17px/1.2 "PT Sans",sans-serif;text-decoration:none;border:0;cursor:pointer;white-space:nowrap}
+.btn-main{background:var(--accent);color:#07130F;box-shadow:0 12px 30px -14px rgba(76,201,160,.7)}
+.btn-main:hover{background:#62d6b0}
+.btn-line{color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
+.btn-line:hover{box-shadow:inset 0 0 0 1.5px var(--accent)}
+.top .btn{min-height:44px;padding:0 18px;font-size:16px}
+
+/* первый экран */
+.hero{display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:center;padding:72px 0 88px}
+.hero h1{font-size:clamp(36px,4.4vw,58px);font-weight:800;letter-spacing:-.02em}
+.hero .lead{margin-top:24px;font-size:20px;color:var(--ink-2);max-width:34em}
+.hero .lead b{color:var(--ink);font-weight:700}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.hero .note{margin-top:18px;color:var(--ink-3);font-size:16px}
+
+/* сцена: телефон + цепочка */
+.scene{position:relative;display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:22px;align-items:center}
+.phone{background:#F4F8F6;color:#10231E;border-radius:30px;padding:14px 12px 16px;box-shadow:0 40px 60px -30px rgba(0,0,0,.7),inset 0 0 0 2px #2A3A34;min-height:470px;display:flex;flex-direction:column}
+.phone .bar{display:flex;align-items:center;gap:10px;padding:4px 6px 12px;border-bottom:1px solid #DCE8E2}
+.phone .ava{width:36px;height:36px;border-radius:50%;background:var(--emerald);color:#fff;display:grid;place-items:center;font:700 15px Rubik,sans-serif;flex:none}
+.phone .who b{display:block;font:700 15px/1.2 Rubik,sans-serif}
+.phone .who i{display:block;font-style:normal;font-size:13px;color:#5A7068}
+.msgs{display:flex;flex-direction:column;gap:8px;padding:12px 2px 0;font-size:15px;line-height:1.4}
+.m{max-width:88%;padding:9px 12px;border-radius:14px;opacity:0;transform:translateY(6px);animation:in .45s ease forwards}
+.m.me{align-self:flex-end;background:var(--emerald);color:#fff;border-bottom-right-radius:4px}
+.m.bot{align-self:flex-start;background:#fff;border:1px solid #DCE8E2;border-bottom-left-radius:4px}
+.m small{display:block;font-size:12px;opacity:.65;margin-top:3px;text-align:right}
+.keys{display:flex;flex-wrap:wrap;gap:6px;align-self:flex-start;opacity:0;animation:in .45s ease forwards}
+.keys span{font-size:13.5px;font-weight:700;padding:7px 10px;border-radius:8px;background:#E1EEE8;color:var(--emerald)}
+.keys span.pay{background:var(--emerald);color:#fff}
+.paid{align-self:center;font-size:13px;color:#5A7068;background:#E8F1ED;padding:5px 10px;border-radius:20px;opacity:0;animation:in .45s ease forwards}
+@keyframes in{to{opacity:1;transform:none}}
+.d1{animation-delay:.3s}.d2{animation-delay:1.3s}.d3{animation-delay:2.4s}.d4{animation-delay:3.2s}.d5{animation-delay:4.2s}.d6{animation-delay:5s}
+
+.trace{list-style:none;margin:0;padding:0;position:relative}
+.trace::before{content:"";position:absolute;left:11px;top:14px;bottom:14px;width:2px;background:var(--line)}
+.trace li{position:relative;padding:8px 0 8px 36px;font-size:15.5px;line-height:1.35;color:var(--ink-3);transition:color .4s}
+.trace li::before{content:"";position:absolute;left:4px;top:12px;width:16px;height:16px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 2px var(--line);transition:background .4s,box-shadow .4s}
+.trace li b{display:block;font:700 13px/1.3 Rubik,sans-serif;color:var(--ink-3);letter-spacing:.01em;transition:color .4s}
+.trace li.on{color:var(--ink)}
+.trace li.on b{color:var(--accent)}
+.trace li.on::before{background:var(--accent);box-shadow:0 0 0 4px rgba(76,201,160,.18)}
+.trace li.on.money::before{background:var(--peach);box-shadow:0 0 0 4px rgba(255,158,122,.18)}
+.trace li.on.money b{color:var(--peach)}
+.scene .cap{grid-column:1/-1;color:var(--ink-3);font-size:14.5px}
+
+/* разделы */
+section.part{padding:88px 0;border-top:1px solid var(--line)}
+.head{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:44px}
+.head h2{font-size:clamp(30px,3.6vw,46px);font-weight:800;letter-spacing:-.015em}
+.head p{color:var(--ink-2)}
+
+/* главный кейс */
+.case{display:grid;grid-template-columns:1.15fr .85fr;gap:48px}
+.case + .case{margin-top:80px;padding-top:80px;border-top:1px dashed var(--line)}
+.case h3{font-size:clamp(26px,2.8vw,34px);font-weight:700}
+.case .sub{color:var(--ink-3);font-size:16px;margin-top:8px}
+.case .about{margin-top:20px;color:var(--ink-2)}
+.case ul.did{margin:22px 0 0;padding:0;list-style:none}
+.case ul.did li{position:relative;padding:10px 0 10px 28px;border-bottom:1px solid var(--line)}
+.case ul.did li:last-child{border-bottom:0}
+.case ul.did li::before{content:"";position:absolute;left:2px;top:20px;width:12px;height:7px;border-left:2.5px solid var(--accent);border-bottom:2.5px solid var(--accent);transform:rotate(-45deg)}
+.case .links{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+
+/* схема процесса */
+.flow{background:var(--soft);border-radius:18px;padding:28px 26px;align-self:start;box-shadow:inset 0 0 0 1px var(--line)}
+.flow h4{margin:0 0 4px;font:700 17px/1.3 Rubik,sans-serif}
+.flow .hint{color:var(--ink-3);font-size:15px;margin-bottom:18px}
+.flow ol{list-style:none;margin:0;padding:0;counter-reset:s}
+.flow li{position:relative;padding:0 0 18px 48px;counter-increment:s}
+.flow li:last-child{padding-bottom:0}
+.flow li::before{content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--deep);box-shadow:inset 0 0 0 1.5px var(--accent);color:var(--accent);font:700 14px Rubik,sans-serif}
+.flow li:not(:last-child)::after{content:"";position:absolute;left:15px;top:34px;bottom:2px;width:2px;background:var(--line)}
+.flow li b{display:block;font-size:17px}
+.flow li span{display:block;color:var(--ink-2);font-size:15.5px;line-height:1.45}
+.flow li.money::before{box-shadow:inset 0 0 0 1.5px var(--peach);color:var(--peach)}
+.tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.tools span{font-size:14px;padding:4px 10px;border-radius:20px;background:var(--deep);color:var(--ink-2);box-shadow:inset 0 0 0 1px var(--line)}
+
+.nums{display:flex;flex-wrap:wrap;gap:12px 36px;margin-top:26px}
+.nums div{font-size:15px;color:var(--ink-3);line-height:1.35}
+.nums b{display:block;font:800 30px/1.1 Rubik,sans-serif;color:var(--ink)}
+
+/* другие проекты */
+.more{display:grid;grid-template-columns:repeat(2,1fr);gap:0 48px}
+.proj{padding:30px 0;border-top:1px solid var(--line)}
+.proj h3{font-size:23px;font-weight:700}
+.proj p{margin-top:10px;color:var(--ink-2)}
+.proj .chain{margin-top:14px;font-size:15.5px;color:var(--ink);line-height:1.5}
+.proj .chain i{font-style:normal;color:var(--accent);padding:0 4px}
+.proj .tools{border:0;padding-top:0;margin-top:14px}
+.proj a{display:inline-block;margin-top:14px;font-weight:700}
+
+/* навыки */
+.skills{display:grid;grid-template-columns:repeat(3,1fr);gap:32px 40px}
+.skills h3{font-size:18px;font-weight:700;color:var(--accent);margin-bottom:10px}
+.skills p{color:var(--ink-2);font-size:17px}
+
+/* как работаю */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:24px;counter-reset:w}
+.steps li{counter-increment:w;padding-top:52px;position:relative}
+.steps li::before{content:counter(w);position:absolute;top:0;left:0;width:38px;height:38px;border-radius:10px;background:var(--emerald);color:#fff;display:grid;place-items:center;font:800 17px Rubik,sans-serif}
+.steps b{display:block;font-size:18px;margin-bottom:6px}
+.steps span{color:var(--ink-2);font-size:16.5px;line-height:1.5}
+
+/* учёба */
+.edu{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.edu div{padding:22px 0 0;border-top:2px solid var(--emerald)}
+.edu b{display:block;font:700 19px/1.3 Rubik,sans-serif}
+.edu span{display:block;margin-top:8px;color:var(--ink-2);font-size:16.5px}
+
+/* финал */
+.final{position:relative;overflow:hidden;background:#12302A;border-radius:22px;padding:56px;box-shadow:inset 0 0 0 1px var(--line);display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+.final::after{content:"";position:absolute;right:-80px;top:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,158,122,.18),transparent);pointer-events:none}
+.final h2{font-size:clamp(28px,3.4vw,42px);font-weight:800}
+.final p{margin-top:16px;color:var(--ink-2)}
+.final .side{display:flex;flex-direction:column;gap:12px;position:relative;z-index:1}
+.final .side .btn{white-space:normal;text-align:center}
+.final .terms{color:var(--ink-3);font-size:15px;margin-top:6px}
+footer{padding:40px 0 48px;color:var(--ink-3);font-size:15px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+footer a{color:var(--ink-2)}
+
+@media (max-width:1080px){
+  .hero{grid-template-columns:1fr;gap:48px;padding-top:48px}
+  .scene{max-width:640px}
+  .steps{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:860px){
+  .head,.case,.final{grid-template-columns:1fr}
+  .head{gap:14px}
+  .more{grid-template-columns:1fr}
+  .skills,.edu{grid-template-columns:1fr 1fr}
+  .final{padding:36px 26px}
+}
+@media (max-width:600px){
+  .wrap{padding:0 16px}
+  body{font-size:18px}
+  .top .wrap{min-height:64px}
+  .brand img{width:38px;height:38px}
+  .brand b{font-size:19px}
+  .brand small{font-size:13px}
+  .top .btn{display:none}
+  .hero{padding:36px 0 64px}
+  .hero h1{font-size:clamp(31px,8.6vw,40px)}
+  .hero .lead{font-size:18.5px}
+  .cta .btn{width:100%}
+  .scene{grid-template-columns:1fr}
+  .phone{min-height:0;max-width:340px;width:100%;margin:0 auto}
+  .trace{display:none}
+  section.part{padding:64px 0}
+  .head h2{font-size:30px}
+  .skills,.edu,.steps{grid-template-columns:1fr}
+  .steps li{padding:0 0 0 54px;min-height:38px}
+  .flow{padding:22px 18px}
+  .final h2{font-size:28px}
+  .nums b{font-size:26px}
+}
+@media (prefers-reduced-motion:reduce){
+  .m,.keys,.paid{animation:none;opacity:1;transform:none}
+  .trace li,.trace li::before{transition:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="#" aria-label="Винера Николаева, на главную">
+    <img src="assets/znak.svg" alt="" width="44" height="44">
+    <span><b>Винера Николаева</b><small>чат-боты и автоматизация с ИИ</small></span>
+  </a>
+  <a class="btn btn-main" href="#contact">Связаться</a>
+</div></header>
+
+<main>
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <h1>Собираю чат-ботов и автоматизацию с ИИ на n8n</h1>
+      <p class="lead">Боты в <b>Telegram, ВКонтакте и MAX</b> с оплатой по СБП, ИИ-ассистенты по документам компании, связка с Google Таблицами, Календарём и почтой, ролики и посты по расписанию. Беру постоянную удалённую работу и отдельные проекты.</p>
+      <div class="cta">
+        <a class="btn btn-main" href="https://t.me/moy_horar_bot?start=hh_vitrina" target="_blank" rel="noopener">Задать вопрос боту Ирины</a>
+        <a class="btn btn-line" href="#projects">Посмотреть проекты</a>
+      </div>
+      <p class="note">Первый вопрос боту – бесплатно. Бот работает с 18 октября 2026 года.</p>
+    </div>
+
+    <div class="scene" aria-label="Пример разговора с ботом и что в это время делает n8n">
+      <div class="phone" aria-hidden="true">
+        <div class="bar"><span class="ava">ИВ</span><span class="who"><b>Ирина Владимировна</b><i>ИИ-астролог, бот</i></span></div>
+        <div class="msgs">
+          <div class="m me d1">Получу ли я эту работу?<small>21:40</small></div>
+          <div class="m bot d2">Вопрос записала. Строю карту на минуту вопроса.<small>21:40</small></div>
+          <div class="m bot d3">Ответ готов. Главное в карте – …<small>21:41</small></div>
+          <div class="keys d4"><span>Почему так?</span><span>Уточнить</span></div>
+          <div class="keys d5"><span class="pay">Ещё вопрос – 299 ₽ по СБП</span></div>
+          <div class="paid d6">Оплата прошла, доступ открыт</div>
+        </div>
+      </div>
+      <ol class="trace" id="trace">
+        <li><b>Telegram, ВК или MAX</b>Вопрос пришёл, n8n принял его по вебхуку</li>
+        <li><b>Таблица бота</b>Проверяю, сколько бесплатных вопросов осталось</li>
+        <li><b>Расчёт</b>Карта на минуту и место вопроса</li>
+        <li><b>ИИ</b>Толкование по правилам, которые я прописала</li>
+        <li><b>Кнопки</b>«Почему так?» и уточнения</li>
+        <li class="money"><b>ЮKassa</b>Счёт по СБП, после оплаты – доступ и сообщение владельцу</li>
+      </ol>
+      <p class="cap">Так выглядит разговор с ботом, текст ответа здесь сокращён. Справа – что в это время делает процесс в n8n.</p>
+    </div>
+  </section>
+</div>
+
+<section class="part" id="projects"><div class="wrap">
+  <div class="head">
+    <h2>Свой проект от бота до роликов</h2>
+    <p>ИИ-астролог Ирина Владимировна – мой учебный и рабочий полигон. На нём я собрала всё, что умею: бота с оплатой в трёх мессенджерах и контент-завод, который выкладывает ролики без меня.</p>
+  </div>
+
+  <article class="case">
+    <div>
+      <h3>Бот-консультант с оплатой в трёх мессенджерах</h3>
+      <p class="sub">n8n, Telegram, ВКонтакте, MAX, ЮKassa</p>
+      <p class="about">Человек задаёт вопрос, бот сам считает карту, отвечает через ИИ и объясняет ответ. Первый вопрос бесплатный, следующие – платные: бот выставляет счёт и открывает доступ после оплаты.</p>
+      <ul class="did">
+        <li>Один и тот же сценарий работает в Telegram, ВКонтакте и MAX – три процесса n8n, правки вношу во все три.</li>
+        <li>Оплата через ЮKassa по СБП: отдельный магазин на каждый мессенджер, уведомления об оплате приходят в n8n, владельцу – сообщение о новой оплате.</li>
+        <li>Пользователи, вопросы и оплаты хранятся в Google Таблице: бот помнит, сколько бесплатных вопросов осталось.</li>
+        <li>Разбираю журнал запусков, когда человек застрял: например, бот терял вопрос, если его писали до города – теперь вопрос сохраняется.</li>
+        <li>Перед каждой правкой сохраняю копию процесса, чтобы можно было откатить.</li>
+      </ul>
+      <div class="links">
+        <a class="btn btn-main" href="https://t.me/moy_horar_bot?start=hh_vitrina" target="_blank" rel="noopener">Открыть бота в Telegram</a>
+        <a class="btn btn-line" href="https://irina-horar.ru" target="_blank" rel="noopener">Сайт irina-horar.ru</a>
+      </div>
+    </div>
+    <aside class="flow">
+      <h4>Как идёт платный вопрос</h4>
+      <p class="hint">Проверено живой оплатой 05.11.2026 во ВКонтакте</p>
+      <ol>
+        <li><b>Кнопка «Оплатить по СБП»</b><span>n8n создаёт платёж в ЮKassa и присылает ссылку</span></li>
+        <li class="money"><b>Человек платит 299 ₽</b><span>ЮKassa присылает уведомление на вебхук</span></li>
+        <li><b>Проверка платежа</b><span>n8n сверяет статус и записывает оплату в таблицу</span></li>
+        <li><b>Доступ открыт</b><span>Человеку – «Оплата прошла», владельцу – сообщение о новой оплате</span></li>
+      </ol>
+      <div class="tools"><span>n8n</span><span>Вебхуки</span><span>ЮKassa API</span><span>Telegram Bot API</span><span>ВКонтакте API</span><span>MAX</span><span>Google Таблицы</span></div>
+    </aside>
+  </article>
+
+  <article class="case">
+    <div>
+      <h3>Контент-завод: ролики и посты без ручной выкладки</h3>
+      <p class="sub">n8n, ИИ, HeyGen, Google Таблицы</p>
+      <p class="about">Ролики с ИИ-аватаром эксперта делаются и выходят по расписанию. Моя часть – собрать процесс и следить за ним, а не сидеть над каждым роликом.</p>
+      <ul class="did">
+        <li>n8n находит популярные ролики на YouTube, ИИ пишет по ним свои сценарии – по одной строке за запуск, зависшие строки сами возвращаются в очередь.</li>
+        <li>HeyGen делает видео с ИИ-аватаром, образы аватара меняются по очереди сами.</li>
+        <li>Ролики выходят по расписанию на YouTube, Rutube и во ВКонтакте.</li>
+        <li>Посты в Telegram с картинкой уходят по отметке в Google Таблице – в нужный день и час.</li>
+        <li>Отдельный процесс дважды в день проверяет выкладку и пишет мне только о сбоях.</li>
+        <li>На всех ссылках метки: вижу, откуда люди приходят в бота.</li>
+      </ul>
+      <div class="nums">
+        <div><b>4,4 тыс.</b>просмотров на YouTube за 28 дней</div>
+        <div><b>36</b>подписчиков за первые 3 недели</div>
+      </div>
+    </div>
+    <aside class="flow">
+      <h4>Путь одного ролика</h4>
+      <p class="hint">Очередь и статусы – в Google Таблице</p>
+      <ol>
+        <li><b>Поиск темы</b><span>Популярные ролики на YouTube по нише</span></li>
+        <li><b>Сценарий</b><span>ИИ пишет текст по правилам ниши и ставит метку для бота</span></li>
+        <li><b>Видео</b><span>HeyGen озвучивает сценарий ИИ-аватаром</span></li>
+        <li><b>Выкладка</b><span>По расписанию, статус в таблице меняется сам</span></li>
+        <li><b>Проверка</b><span>Сторож дважды в день, сообщение только при сбое</span></li>
+      </ol>
+      <div class="tools"><span>n8n</span><span>HeyGen</span><span>YouTube</span><span>Rutube</span><span>Google Таблицы</span><span>Автопостинг</span></div>
+    </aside>
+  </article>
+</div></section>
+
+<section class="part"><div class="wrap">
+  <div class="head">
+    <h2>Другие боты и автоматизации</h2>
+    <p>Собраны на курсах и для себя. Каждый доведён до рабочего состояния и проверен в мессенджере.</p>
+  </div>
+  <div class="more">
+    <article class="proj">
+      <h3>ИИ-секретарь в Telegram</h3>
+      <p>Владелец наговаривает боту голосовое: «Запиши Марину Козлову на четверг в 19:00». Бот находит контакт, ставит встречу и отвечает, на какое время записал.</p>
+      <p class="chain">Голосовое<i>›</i>текст через Groq<i>›</i>контакт из Google Таблицы<i>›</i>встреча в Календаре через MCP<i>›</i>письмо в Gmail</p>
+      <p>Утром присылает план дня, напоминает о делах.</p>
+      <div class="tools"><span>n8n</span><span>MCP</span><span>Google Календарь</span><span>Gmail API</span><span>Groq</span><span>Postgres</span></div>
+    </article>
+    <article class="proj">
+      <h3>ИИ-ассистент по документам (RAG)</h3>
+      <p>Бот отвечает строго по загруженным документам и не выдумывает. Подходит для прайса, регламентов и правил компании.</p>
+      <p class="chain">PDF в Google Диске<i>›</i>векторная база Supabase<i>›</i>агент находит нужный кусок<i>›</i>ответ в Telegram</p>
+      <div class="tools"><span>n8n</span><span>RAG</span><span>Supabase</span><span>Google Диск</span><span>ИИ-агенты</span></div>
+    </article>
+    <article class="proj">
+      <h3>Бот-продавец на Cloudflare</h3>
+      <p>Показывает работы со снимками и цены, задаёт вопросы брифа, спрашивает согласие на обработку данных и присылает владельцу готовую заявку. На свободные вопросы отвечает нейросеть – только по фактам с витрины.</p>
+      <div class="tools"><span>Cloudflare Workers</span><span>Telegram Bot API</span><span>ChatGPT</span></div>
+      <a href="https://t.me/vinera_saity_bot" target="_blank" rel="noopener">Открыть @vinera_saity_bot</a>
+    </article>
+    <article class="proj">
+      <h3>ИИ-помощник для ателье</h3>
+      <p>Отвечает клиентам про цены, сроки и запись в любое время. Клиент написал в 21:40 – помощник ответил в 21:40.</p>
+      <div class="tools"><span>n8n</span><span>Промпт-инжиниринг</span><span>Telegram</span></div>
+      <a href="https://t.me/iglaniti_demo_bot" target="_blank" rel="noopener">Открыть @iglaniti_demo_bot</a>
+    </article>
+    <article class="proj">
+      <h3>Радар заказов</h3>
+      <p>Каждое утро в 07:00 читает выбранные Telegram-каналы и ленту Kwork, отбирает подходящие заказы и присылает сводку с черновиками откликов в бота. По пятницам – итоги недели.</p>
+      <div class="tools"><span>Node.js</span><span>Telegram</span><span>Задачи по расписанию</span></div>
+    </article>
+    <article class="proj">
+      <h3>Сайты-лендинги</h3>
+      <p>Одностраничные сайты для малого бизнеса с заявкой в Telegram: собираю в Claude Code, публикую на GitHub Pages или переношу в Тильду.</p>
+      <div class="tools"><span>Claude Code</span><span>HTML и CSS</span><span>Тильда</span><span>GitHub Pages</span></div>
+      <a href="https://vineravip2018-jpg.github.io/" target="_blank" rel="noopener">Витрина сайтов</a>
+    </article>
+  </div>
+</div></section>
+
+<section class="part"><div class="wrap">
+  <div class="head">
+    <h2>С чем работаю</h2>
+    <p>Всё, что ниже, я подключала сама в своих проектах.</p>
+  </div>
+  <div class="skills">
+    <div><h3>Сборка процессов</h3><p>n8n, вебхуки, работа с API, задачи по расписанию, журнал запусков и откат версий</p></div>
+    <div><h3>Мессенджеры</h3><p>Telegram Bot API, ВКонтакте API, MAX, кнопки, оплата, рассылка владельцу</p></div>
+    <div><h3>ИИ</h3><p>ChatGPT, Gemini, Claude Code, ИИ-агенты, RAG, MCP, промпт-инжиниринг</p></div>
+    <div><h3>Данные</h3><p>Google Таблицы, Supabase, Postgres для памяти агента, Google Диск</p></div>
+    <div><h3>Оплата и сервисы</h3><p>ЮKassa по СБП, Google Календарь, Gmail, Cloudflare Workers</p></div>
+    <div><h3>Контент и поиск</h3><p>HeyGen, автопостинг, метки на ссылках, Яндекс Вебмастер, Яндекс Вордстат</p></div>
+  </div>
+</div></section>
+
+<section class="part"><div class="wrap">
+  <div class="head">
+    <h2>Как я работаю</h2>
+    <p>Сильная сторона у меня – техническая часть. Продажи и переговоры с клиентами оставляю тем, кто это умеет.</p>
+  </div>
+  <ol class="steps">
+    <li><b>Разбираюсь</b><span>Где у людей уходит время на ручную работу</span></li>
+    <li><b>Собираю</b><span>Процесс в n8n и бота под задачу</span></li>
+    <li><b>Проверяю</b><span>Каждую функцию на живых данных, в самом мессенджере</span></li>
+    <li><b>Передаю</b><span>Короткая инструкция, чтобы команда пользовалась сама</span></li>
+    <li><b>Поддерживаю</b><span>Слежу за сбоями, чиню, вношу правки</span></li>
+  </ol>
+</div></section>
+
+<section class="part"><div class="wrap">
+  <div class="head">
+    <h2>Обучение</h2>
+    <p>Учусь ИИ и автоматизации с мая 2026 года.</p>
+  </div>
+  <div class="edu">
+    <div><b>«Разработка автоматизированных контентных систем»</b><span>Диплом о профессиональной переподготовке, 256 ч. ООО «Академия Интернет-Маркетинга», 31.10.2026</span></div>
+    <div><b>«Проектирование и внедрение ИИ-агентов»</b><span>Удостоверение о повышении квалификации, 72 ч. ООО «Академия Интернет-Маркетинга», 15.10.2026</span></div>
+    <div><b>«Вайб-сайты»</b><span>Сайты, боты-продавцы и радар заказов с Claude Code. Прохожу сейчас, aimschool.ru</span></div>
+  </div>
+</div></section>
+
+<section class="part" id="contact"><div class="wrap">
+  <div class="final">
+    <div>
+      <h2>Нужен бот или автоматизация – напишите</h2>
+      <p>Беру постоянную удалённую работу на одну компанию и отдельные проекты. Вы пишете задачу – я задаю вопросы, собираю, проверяю каждую функцию и дальше поддерживаю.</p>
+      <p class="terms">Удалённо. ИП на НПД, договор ГПХ.</p>
+    </div>
+    <div class="side">
+      <a class="btn btn-main" id="mail" href="mailto:vinera.ai@yandex.ru">Написать на vinera.ai@yandex.ru</a>
+      <a class="btn btn-line" href="https://t.me/moy_horar_bot?start=hh_vitrina" target="_blank" rel="noopener">Проверить бота Ирины</a>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <span>Винера Николаева – чат-боты и автоматизация с ИИ, 2026</span>
+  <a href="https://vineravip2018-jpg.github.io/politika.html">Политика обработки данных</a>
+</div></footer>
+
+<script>
+(function(){
+  var items=[].slice.call(document.querySelectorAll('#trace li'));
+  if(!items.length)return;
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce){items.forEach(function(li){li.classList.add('on')});return;}
+  var times=[300,900,1700,2400,3200,4200];
+  items.forEach(function(li,i){setTimeout(function(){li.classList.add('on')},times[i]||i*800)});
+})();
+</script>
+</body>
+</html>
