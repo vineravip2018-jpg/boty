@@ -177,6 +177,27 @@ section.part{padding:96px 0;border-top:1px solid var(--line)}
 .proj .tools{border:0;padding-top:0;margin-top:14px}
 .proj a{display:inline-block;margin-top:14px;font-weight:700}
 
+/* оформление сообществ */
+.dsg{display:grid;grid-template-columns:1fr 220px;gap:40px;align-items:center}
+.vkpage{margin:0;background:var(--soft);border-radius:20px;padding:16px;box-shadow:inset 0 0 0 1px var(--line)}
+.vkcover{border-radius:12px;overflow:hidden;aspect-ratio:1920/768;background:#1d1640}
+.vkcover img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform 6s ease-out}
+.vkpage.in .vkcover img{transform:scale(1)}
+.dsg figcaption,.dsg2 figcaption{color:var(--ink-3);font-size:15px;margin-top:12px;line-height:1.45}
+.dsg .vphone{max-width:220px;margin-bottom:34px}
+.dsg2{display:grid;grid-template-columns:1fr 2.2fr;gap:24px;margin-top:40px;align-items:start}
+.dsg2 figure{margin:0;background:var(--soft);border-radius:20px;padding:16px;box-shadow:inset 0 0 0 1px var(--line)}
+.dsg2 img{display:block;width:100%;height:auto;border-radius:12px}
+.dsg-list{list-style:none;margin:36px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.dsg-list li{position:relative;padding-left:28px;color:var(--ink-2);font-size:17px}
+.dsg-list li::before{content:"";position:absolute;left:2px;top:9px;width:12px;height:7px;border-left:2.5px solid var(--accent);border-bottom:2.5px solid var(--accent);transform:rotate(-45deg)}
+@media (max-width:860px){
+  .dsg{grid-template-columns:1fr}
+  .dsg2{grid-template-columns:1fr}
+  .dsg2 figure:first-child{max-width:340px}
+  .dsg-list{grid-template-columns:1fr}
+}
+
 /* навыки */
 .skills{display:grid;grid-template-columns:repeat(3,1fr);gap:32px 40px}
 .skills h3{font-size:18px;font-weight:700;color:var(--accent);margin-bottom:10px}
@@ -346,6 +367,7 @@ footer a{color:var(--ink-2)}
       </ul>
       <div class="links">
         <a class="btn btn-main" href="https://t.me/moy_horar_bot?start=hh_vitrina" target="_blank" rel="noopener">Открыть бота в Telegram</a>
+        <a class="btn btn-line" href="https://vk.me/irina_horar?ref=hh_vitrina" target="_blank" rel="noopener">Открыть во ВКонтакте</a>
         <a class="btn btn-line" href="https://irina-horar.ru" target="_blank" rel="noopener">Сайт irina-horar.ru</a>
       </div>
     </div>
@@ -447,6 +469,29 @@ footer a{color:var(--ink-2)}
       <a href="https://vineravip2018-jpg.github.io/" target="_blank" rel="noopener">Витрина сайтов</a>
     </article>
   </div>
+</div></section>
+
+<section class="part" id="design"><div class="wrap">
+  <div class="head reveal">
+    <h2>Оформление сообществ</h2>
+    <p>Дополнительная услуга к боту: обложка, живая обложка для телефона, описание и закреплённый пост, чтобы человек сразу понял, куда писать. Ниже – сообщество Ирины во ВКонтакте и её Instagram.</p>
+  </div>
+  <div class="dsg">
+    <figure class="vkpage reveal">
+      <div class="vkcover"><img src="assets/vk-cover.jpg" alt="Обложка сообщества Ирины во ВКонтакте, 1920 на 768" loading="lazy" width="1200" height="480"></div>
+      <figcaption>Обложка сообщества ВКонтакте, 1920×768. Призыв «Задать вопрос – в сообщениях сообщества» ведёт в бота во ВКонтакте.</figcaption>
+    </figure>
+    <figure class="vphone natural reveal"><span class="live">живая обложка</span><video src="assets/vk-live.mp4" poster="assets/vk-live.jpg" muted loop playsinline preload="none" aria-label="Живая обложка сообщества для телефона"></video><figcaption>Живая обложка для телефона</figcaption></figure>
+  </div>
+  <div class="dsg2">
+    <figure class="reveal"><img src="assets/vk-zakrep.jpg" alt="Картинка закреплённого поста «Правила сообщества»" loading="lazy" width="600" height="600"><figcaption>Закреплённый пост «Правила»: ссылка в бота с меткой, видно, сколько людей пришло из закрепа</figcaption></figure>
+    <figure class="reveal wide"><img src="assets/insta-banner.jpg" alt="Баннер профиля Instagram из трёх закреплённых постов" loading="lazy" width="1200" height="400"><figcaption>Instagram: описание профиля и баннер из трёх закреплённых постов, которые складываются в одну картинку</figcaption></figure>
+  </div>
+  <ul class="dsg-list reveal">
+    <li>Живую обложку проверяю в приложении на телефоне: важное держу в верхней половине, ниже её закрывают название и кнопки.</li>
+    <li>Аватар, обложка и закреп в одном стиле с ботом и роликами.</li>
+    <li>Обложки для длинных видео на YouTube – у каждого ролика своя, без случайного кадра.</li>
+  </ul>
 </div></section>
 
 <section class="part"><div class="wrap">
