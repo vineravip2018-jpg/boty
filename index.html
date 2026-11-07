@@ -16,27 +16,29 @@
 :root{
   --paper:#0B1714; --soft:#13261F; --deep:#0F201A; --line:#22382F;
   --ink:#E8F2EE; --ink-2:#A9BCB4; --ink-3:#7F938B;
-  --accent:#4CC9A0; --emerald:#0E6B56; --peach:#FF9E7A; --mint:#DDF3EA;
-  --r:10px;
+  --accent:#4CC9A0; --emerald:#0E6B56; --peach:#FF9E7A;
+  --net:#2E9BD6; --r:10px;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--paper);color:var(--ink);font:400 18px/1.6 "PT Sans",system-ui,sans-serif;overflow-x:hidden}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 18px/1.6 "PT Sans",system-ui,sans-serif;overflow-x:clip}
 a{color:var(--accent)}
 a:focus-visible,button:focus-visible{outline:2px solid var(--peach);outline-offset:3px;border-radius:6px}
-h1,h2,h3{font-family:Rubik,system-ui,sans-serif;margin:0;line-height:1.12;hyphens:none;-webkit-hyphens:none;overflow-wrap:normal;word-break:keep-all;text-wrap:balance}
+h1,h2,h3,h4{font-family:Rubik,system-ui,sans-serif;margin:0;line-height:1.12;hyphens:none;-webkit-hyphens:none;overflow-wrap:normal;word-break:keep-all;text-wrap:balance}
 .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
 p{margin:0}
 
 /* шапка */
-.top{position:sticky;top:0;z-index:20;background:rgba(11,23,20,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top{position:sticky;top:0;z-index:20;background:rgba(11,23,20,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:border-color .3s}
+.top.scrolled{border-color:var(--line)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:72px}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
 .brand img{width:44px;height:44px;flex:none}
 .brand b{display:block;font:800 22px/1.05 Rubik,sans-serif;letter-spacing:-.01em}
 .brand small{display:block;color:var(--ink-3);font-size:14px;line-height:1.3;margin-top:3px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 22px;border-radius:var(--r);font:700 17px/1.2 "PT Sans",sans-serif;text-decoration:none;border:0;cursor:pointer;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 22px;border-radius:var(--r);font:700 17px/1.2 "PT Sans",sans-serif;text-decoration:none;border:0;cursor:pointer;white-space:nowrap;transition:transform .2s,box-shadow .2s,background .2s}
+.btn:hover{transform:translateY(-2px)}
 .btn-main{background:var(--accent);color:#07130F;box-shadow:0 12px 30px -14px rgba(76,201,160,.7)}
 .btn-main:hover{background:#62d6b0}
 .btn-line{color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
@@ -44,53 +46,83 @@ p{margin:0}
 .top .btn{min-height:44px;padding:0 18px;font-size:16px}
 
 /* первый экран */
-.hero{display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:center;padding:72px 0 88px}
+.hero{display:grid;grid-template-columns:1fr 1.08fr;gap:48px;align-items:center;padding:64px 0 88px}
 .hero h1{font-size:clamp(36px,4.4vw,58px);font-weight:800;letter-spacing:-.02em}
 .hero .lead{margin-top:24px;font-size:20px;color:var(--ink-2);max-width:34em}
 .hero .lead b{color:var(--ink);font-weight:700}
 .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
 .hero .note{margin-top:18px;color:var(--ink-3);font-size:16px}
 
+/* переключатель мессенджеров */
+.nets{grid-column:1/-1;display:flex;gap:8px;margin-bottom:4px}
+.nets button{flex:1;position:relative;overflow:hidden;background:var(--deep);color:var(--ink-3);border:0;border-radius:10px;padding:11px 10px 13px;font:700 15px/1 Rubik,sans-serif;cursor:pointer;box-shadow:inset 0 0 0 1px var(--line);transition:color .3s,box-shadow .3s}
+.nets button i{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--accent)}
+.nets button.on{color:var(--ink);box-shadow:inset 0 0 0 1px var(--accent)}
+.nets button.on i{animation:fill var(--loop,9s) linear forwards}
+.nets button.done i{width:100%;opacity:.35}
+@keyframes fill{to{width:100%}}
+
 /* сцена: телефон + цепочка */
-.scene{position:relative;display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:22px;align-items:center}
-.phone{background:#F4F8F6;color:#10231E;border-radius:30px;padding:14px 12px 16px;box-shadow:0 40px 60px -30px rgba(0,0,0,.7),inset 0 0 0 2px #2A3A34;min-height:470px;display:flex;flex-direction:column}
-.phone .bar{display:flex;align-items:center;gap:10px;padding:4px 6px 12px;border-bottom:1px solid #DCE8E2}
-.phone .ava{width:36px;height:36px;border-radius:50%;background:var(--emerald);color:#fff;display:grid;place-items:center;font:700 15px Rubik,sans-serif;flex:none}
-.phone .who b{display:block;font:700 15px/1.2 Rubik,sans-serif}
-.phone .who i{display:block;font-style:normal;font-size:13px;color:#5A7068}
-.msgs{display:flex;flex-direction:column;gap:8px;padding:12px 2px 0;font-size:15px;line-height:1.4}
-.m{max-width:88%;padding:9px 12px;border-radius:14px;opacity:0;transform:translateY(6px);animation:in .45s ease forwards}
-.m.me{align-self:flex-end;background:var(--emerald);color:#fff;border-bottom-right-radius:4px}
+.scene{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:12px 26px;align-items:center}
+.chatphone{background:#F4F8F6;color:#10231E;border-radius:30px;padding:14px 12px 16px;box-shadow:0 40px 60px -30px rgba(0,0,0,.7),inset 0 0 0 2px #2A3A34;height:470px;display:flex;flex-direction:column;overflow:hidden}
+.chatphone .bar{display:flex;align-items:center;gap:10px;padding:4px 6px 12px;border-bottom:1px solid #DCE8E2}
+.chatphone .ava{width:36px;height:36px;border-radius:50%;background:var(--net);color:#fff;display:grid;place-items:center;font:700 15px Rubik,sans-serif;flex:none;transition:background .5s}
+.chatphone .who b{display:block;font:700 15px/1.2 Rubik,sans-serif}
+.chatphone .who i{display:block;font-style:normal;font-size:13px;color:#5A7068}
+.msgs{display:flex;flex-direction:column;gap:8px;padding:12px 2px 0;font-size:15px;line-height:1.4;transition:opacity .4s}
+.msgs.fade{opacity:0}
+.m,.keys,.paid,.typing{display:none}
+.show{display:flex;animation:pop .4s cubic-bezier(.2,.8,.2,1)}
+.m.show{display:block}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+.m{max-width:88%;padding:9px 12px;border-radius:14px}
+.m.me{align-self:flex-end;background:var(--net);color:#fff;border-bottom-right-radius:4px;transition:background .5s}
 .m.bot{align-self:flex-start;background:#fff;border:1px solid #DCE8E2;border-bottom-left-radius:4px}
 .m small{display:block;font-size:12px;opacity:.65;margin-top:3px;text-align:right}
-.keys{display:flex;flex-wrap:wrap;gap:6px;align-self:flex-start;opacity:0;animation:in .45s ease forwards}
+.keys{flex-wrap:wrap;gap:6px;align-self:flex-start}
 .keys span{font-size:13.5px;font-weight:700;padding:7px 10px;border-radius:8px;background:#E1EEE8;color:var(--emerald)}
 .keys span.pay{background:var(--emerald);color:#fff}
-.paid{align-self:center;font-size:13px;color:#5A7068;background:#E8F1ED;padding:5px 10px;border-radius:20px;opacity:0;animation:in .45s ease forwards}
-@keyframes in{to{opacity:1;transform:none}}
-.d1{animation-delay:.3s}.d2{animation-delay:1.3s}.d3{animation-delay:2.4s}.d4{animation-delay:3.2s}.d5{animation-delay:4.2s}.d6{animation-delay:5s}
+.paid{align-self:center;font-size:13px;color:#5A7068;background:#E8F1ED;padding:5px 10px;border-radius:20px}
+.typing{gap:4px;align-self:flex-start;padding:11px 14px;background:#fff;border:1px solid #DCE8E2;border-radius:14px 14px 14px 4px}
+.typing i{width:7px;height:7px;border-radius:50%;background:#7F938B;animation:dot 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+@keyframes dot{0%,60%,100%{opacity:.3;transform:none}30%{opacity:1;transform:translateY(-3px)}}
 
 .trace{list-style:none;margin:0;padding:0;position:relative}
 .trace::before{content:"";position:absolute;left:11px;top:14px;bottom:14px;width:2px;background:var(--line)}
+.packet{position:absolute;left:6px;top:14px;width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px rgba(76,201,160,.2),0 0 18px rgba(76,201,160,.8);transition:top .6s cubic-bezier(.6,0,.3,1),background .3s;z-index:2;opacity:0}
+.packet.go{opacity:1}
+.packet.money{background:var(--peach);box-shadow:0 0 0 5px rgba(255,158,122,.2),0 0 18px rgba(255,158,122,.8)}
 .trace li{position:relative;padding:8px 0 8px 36px;font-size:15.5px;line-height:1.35;color:var(--ink-3);transition:color .4s}
 .trace li::before{content:"";position:absolute;left:4px;top:12px;width:16px;height:16px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 2px var(--line);transition:background .4s,box-shadow .4s}
-.trace li b{display:block;font:700 13px/1.3 Rubik,sans-serif;color:var(--ink-3);letter-spacing:.01em;transition:color .4s}
+.trace li b{display:block;font:700 13px/1.3 Rubik,sans-serif;color:var(--ink-3);transition:color .4s}
 .trace li.on{color:var(--ink)}
 .trace li.on b{color:var(--accent)}
-.trace li.on::before{background:var(--accent);box-shadow:0 0 0 4px rgba(76,201,160,.18)}
-.trace li.on.money::before{background:var(--peach);box-shadow:0 0 0 4px rgba(255,158,122,.18)}
+.trace li.on::before{background:var(--emerald);box-shadow:inset 0 0 0 2px var(--accent)}
 .trace li.on.money b{color:var(--peach)}
-.scene .cap{grid-column:1/-1;color:var(--ink-3);font-size:14.5px}
+.trace li.on.money::before{background:#5a3527;box-shadow:inset 0 0 0 2px var(--peach)}
+.scene .cap{grid-column:1/-1;color:var(--ink-3);font-size:14.5px;margin-top:6px}
+
+/* телефон с видео */
+.vphone{position:relative;width:100%;max-width:250px;aspect-ratio:9/18.6;border-radius:30px;padding:8px;background:#0a1210;box-shadow:0 40px 60px -30px rgba(0,0,0,.8),inset 0 0 0 2px #2A3A34;justify-self:center}
+.vphone video{display:block;width:100%;height:100%;object-fit:cover;object-position:top;border-radius:23px;background:#1b2b25}
+.vphone.natural{aspect-ratio:auto}
+.vphone.natural video{height:auto}
+.vphone figcaption{position:absolute;left:50%;bottom:-34px;transform:translateX(-50%);white-space:nowrap;color:var(--ink-3);font-size:14px}
+.vphone .live{position:absolute;top:18px;left:18px;display:flex;align-items:center;gap:6px;background:rgba(11,23,20,.78);color:#fff;font:700 12px/1 Rubik,sans-serif;padding:6px 9px 6px 8px;border-radius:20px;opacity:0;transition:opacity .3s}
+.vphone .live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--peach);animation:blink 1.4s infinite}
+.vphone.playing .live{opacity:1}
+@keyframes blink{50%{opacity:.25}}
 
 /* разделы */
-section.part{padding:88px 0;border-top:1px solid var(--line)}
-.head{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:44px}
+section.part{padding:96px 0;border-top:1px solid var(--line)}
+.head{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:48px}
 .head h2{font-size:clamp(30px,3.6vw,46px);font-weight:800;letter-spacing:-.015em}
 .head p{color:var(--ink-2)}
 
-/* главный кейс */
-.case{display:grid;grid-template-columns:1.15fr .85fr;gap:48px}
-.case + .case{margin-top:80px;padding-top:80px;border-top:1px dashed var(--line)}
+/* кейсы */
+.case{display:grid;grid-template-columns:1.15fr .95fr 250px;gap:40px;align-items:start}
+.case + .case{margin-top:96px;padding-top:96px;border-top:1px dashed var(--line)}
 .case h3{font-size:clamp(26px,2.8vw,34px);font-weight:700}
 .case .sub{color:var(--ink-3);font-size:16px;margin-top:8px}
 .case .about{margin-top:20px;color:var(--ink-2)}
@@ -99,33 +131,49 @@ section.part{padding:88px 0;border-top:1px solid var(--line)}
 .case ul.did li:last-child{border-bottom:0}
 .case ul.did li::before{content:"";position:absolute;left:2px;top:20px;width:12px;height:7px;border-left:2.5px solid var(--accent);border-bottom:2.5px solid var(--accent);transform:rotate(-45deg)}
 .case .links{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.case .vphone{margin-bottom:34px}
 
 /* схема процесса */
-.flow{background:var(--soft);border-radius:18px;padding:28px 26px;align-self:start;box-shadow:inset 0 0 0 1px var(--line)}
-.flow h4{margin:0 0 4px;font:700 17px/1.3 Rubik,sans-serif}
+.flow{background:var(--soft);border-radius:18px;padding:28px 26px;box-shadow:inset 0 0 0 1px var(--line)}
+.flow h4{margin:0 0 4px;font-size:17px;font-weight:700;line-height:1.3}
 .flow .hint{color:var(--ink-3);font-size:15px;margin-bottom:18px}
-.flow ol{list-style:none;margin:0;padding:0;counter-reset:s}
-.flow li{position:relative;padding:0 0 18px 48px;counter-increment:s}
+.flow ol{list-style:none;margin:0;padding:0;counter-reset:s;position:relative}
+.flow li{position:relative;padding:0 0 18px 48px;counter-increment:s;transition:opacity .4s}
 .flow li:last-child{padding-bottom:0}
-.flow li::before{content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--deep);box-shadow:inset 0 0 0 1.5px var(--accent);color:var(--accent);font:700 14px Rubik,sans-serif}
-.flow li:not(:last-child)::after{content:"";position:absolute;left:15px;top:34px;bottom:2px;width:2px;background:var(--line)}
-.flow li b{display:block;font-size:17px}
-.flow li span{display:block;color:var(--ink-2);font-size:15.5px;line-height:1.45}
-.flow li.money::before{box-shadow:inset 0 0 0 1.5px var(--peach);color:var(--peach)}
+.flow li::before{content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--deep);box-shadow:inset 0 0 0 1.5px var(--line);color:var(--ink-3);font:700 14px Rubik,sans-serif;transition:all .4s;z-index:1}
+.flow li:not(:last-child)::after{content:"";position:absolute;left:15px;top:34px;bottom:2px;width:2px;background:var(--line);background-image:linear-gradient(var(--accent),var(--accent));background-repeat:no-repeat;background-size:100% 0;transition:background-size .7s ease}
+.flow li b{display:block;font-size:17px;color:var(--ink-2);transition:color .4s}
+.flow li span{display:block;color:var(--ink-3);font-size:15.5px;line-height:1.45;transition:color .4s}
+.flow li.on::before{box-shadow:inset 0 0 0 1.5px var(--accent);color:var(--accent);background:#0f2c24}
+.flow li.on b{color:var(--ink)}
+.flow li.on span{color:var(--ink-2)}
+.flow li.on:not(:last-child)::after{background-size:100% 100%}
+.flow li.cur::before{box-shadow:inset 0 0 0 1.5px var(--accent),0 0 0 6px rgba(76,201,160,.18);animation:ring 1.1s ease-out infinite}
+.flow li.money.on::before{box-shadow:inset 0 0 0 1.5px var(--peach);color:var(--peach);background:#2c1d17}
+.flow li.money.cur::before{box-shadow:inset 0 0 0 1.5px var(--peach),0 0 0 6px rgba(255,158,122,.2)}
+@keyframes ring{50%{transform:scale(1.08)}}
 .tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
 .tools span{font-size:14px;padding:4px 10px;border-radius:20px;background:var(--deep);color:var(--ink-2);box-shadow:inset 0 0 0 1px var(--line)}
 
-.nums{display:flex;flex-wrap:wrap;gap:12px 36px;margin-top:26px}
-.nums div{font-size:15px;color:var(--ink-3);line-height:1.35}
-.nums b{display:block;font:800 30px/1.1 Rubik,sans-serif;color:var(--ink)}
+.nums{display:flex;flex-wrap:wrap;gap:14px 40px;margin-top:28px}
+.nums div{font-size:15px;color:var(--ink-3);line-height:1.35;max-width:12em}
+.nums b{display:block;font:800 34px/1.1 Rubik,sans-serif;color:var(--ink);font-variant-numeric:tabular-nums}
 
-/* другие проекты */
-.more{display:grid;grid-template-columns:repeat(2,1fr);gap:0 48px}
+/* проекты с видео */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.vproj{display:grid;grid-template-columns:1fr 200px;gap:28px;align-items:start;background:var(--soft);border-radius:20px;padding:30px;box-shadow:inset 0 0 0 1px var(--line)}
+.vproj h3{font-size:24px;font-weight:700}
+.vproj p{margin-top:12px;color:var(--ink-2);font-size:17px}
+.vproj .vphone{max-width:200px;border-radius:26px;padding:7px;margin-bottom:30px}
+.vproj .vphone video{border-radius:20px}
+.chain{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px;font-size:14.5px;line-height:1.3}
+.chain span{padding:6px 10px;border-radius:8px;background:var(--deep);color:var(--ink-3);box-shadow:inset 0 0 0 1px var(--line);transition:color .35s,box-shadow .35s,background .35s}
+.chain span.on{color:var(--ink);box-shadow:inset 0 0 0 1px var(--accent);background:#0f2c24}
+
+.more{display:grid;grid-template-columns:repeat(2,1fr);gap:0 48px;margin-top:48px}
 .proj{padding:30px 0;border-top:1px solid var(--line)}
 .proj h3{font-size:23px;font-weight:700}
 .proj p{margin-top:10px;color:var(--ink-2)}
-.proj .chain{margin-top:14px;font-size:15.5px;color:var(--ink);line-height:1.5}
-.proj .chain i{font-style:normal;color:var(--accent);padding:0 4px}
 .proj .tools{border:0;padding-top:0;margin-top:14px}
 .proj a{display:inline-block;margin-top:14px;font-weight:700}
 
@@ -135,9 +183,11 @@ section.part{padding:88px 0;border-top:1px solid var(--line)}
 .skills p{color:var(--ink-2);font-size:17px}
 
 /* как работаю */
-.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:24px;counter-reset:w}
-.steps li{counter-increment:w;padding-top:52px;position:relative}
-.steps li::before{content:counter(w);position:absolute;top:0;left:0;width:38px;height:38px;border-radius:10px;background:var(--emerald);color:#fff;display:grid;place-items:center;font:800 17px Rubik,sans-serif}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:24px;counter-reset:w;position:relative}
+.steps::before{content:"";position:absolute;left:19px;right:19px;top:18px;height:2px;background:var(--line);background-image:linear-gradient(90deg,var(--emerald),var(--accent));background-repeat:no-repeat;background-size:0 100%;transition:background-size 1.6s ease .2s}
+.steps.in::before{background-size:100% 100%}
+.steps li{counter-increment:w;padding-top:56px;position:relative}
+.steps li::before{content:counter(w);position:absolute;top:0;left:0;width:38px;height:38px;border-radius:10px;background:var(--emerald);color:#fff;display:grid;place-items:center;font:800 17px Rubik,sans-serif;z-index:1}
 .steps b{display:block;font-size:18px;margin-bottom:6px}
 .steps span{color:var(--ink-2);font-size:16.5px;line-height:1.5}
 
@@ -159,13 +209,21 @@ footer{padding:40px 0 48px;color:var(--ink-3);font-size:15px}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 footer a{color:var(--ink-2)}
 
-@media (max-width:1080px){
-  .hero{grid-template-columns:1fr;gap:48px;padding-top:48px}
+/* появление при прокрутке */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+@media (max-width:1100px){
+  .hero{grid-template-columns:1fr;gap:44px;padding-top:44px}
   .scene{max-width:640px}
+  .case{grid-template-columns:1fr 250px}
+  .case > div:first-child{grid-column:1/-1}
   .steps{grid-template-columns:repeat(3,1fr)}
+  .steps::before{display:none}
+  .duo{grid-template-columns:1fr}
 }
 @media (max-width:860px){
-  .head,.case,.final{grid-template-columns:1fr}
+  .head,.final{grid-template-columns:1fr}
   .head{gap:14px}
   .more{grid-template-columns:1fr}
   .skills,.edu{grid-template-columns:1fr 1fr}
@@ -173,30 +231,37 @@ footer a{color:var(--ink-2)}
 }
 @media (max-width:600px){
   .wrap{padding:0 16px}
-  body{font-size:18px}
   .top .wrap{min-height:64px}
   .brand img{width:38px;height:38px}
   .brand b{font-size:19px}
   .brand small{font-size:13px}
   .top .btn{display:none}
-  .hero{padding:36px 0 64px}
+  .hero{padding:32px 0 64px}
   .hero h1{font-size:clamp(31px,8.6vw,40px)}
   .hero .lead{font-size:18.5px}
   .cta .btn{width:100%}
   .scene{grid-template-columns:1fr}
-  .phone{min-height:0;max-width:340px;width:100%;margin:0 auto}
-  .trace{max-width:340px;margin:0 auto;width:100%}
+  .chatphone{max-width:340px;width:100%;margin:0 auto;height:450px}
+  .trace{max-width:340px;margin:8px auto 0;width:100%}
+  .nets button{font-size:14px;padding:10px 6px 12px}
   section.part{padding:64px 0}
   .head h2{font-size:30px}
+  .case{grid-template-columns:1fr;gap:32px}
+  .case .vphone{max-width:240px}
+  .vproj{grid-template-columns:1fr;padding:24px 20px}
+  .vproj .vphone{max-width:220px}
   .skills,.edu,.steps{grid-template-columns:1fr}
   .steps li{padding:0 0 0 54px;min-height:38px}
   .flow{padding:22px 18px}
   .final h2{font-size:28px}
-  .nums b{font-size:26px}
+  .nums b{font-size:28px}
 }
 @media (prefers-reduced-motion:reduce){
-  .m,.keys,.paid{animation:none;opacity:1;transform:none}
-  .trace li,.trace li::before{transition:none}
+  .reveal{opacity:1;transform:none;transition:none}
+  .show{animation:none}
+  .typing i,.vphone .live::before,.flow li.cur::before{animation:none}
+  .packet,.trace li,.trace li::before,.flow li::after{transition:none}
+  .nets button.on i{animation:none;width:100%}
   html{scroll-behavior:auto}
 }
 </style>
@@ -223,45 +288,58 @@ footer a{color:var(--ink-2)}
       <p class="note">Первый вопрос боту – бесплатно. Бот работает с 18 октября 2026 года.</p>
     </div>
 
-    <div class="scene" aria-label="Пример разговора с ботом и что в это время делает n8n">
-      <div class="phone" aria-hidden="true">
-        <div class="bar"><span class="ava">ИВ</span><span class="who"><b>Ирина Владимировна</b><i>ИИ-астролог, бот</i></span></div>
-        <div class="msgs">
-          <div class="m me d1">Получу ли я эту работу?<small>21:40</small></div>
-          <div class="m bot d2">Вопрос записала. Строю карту на минуту вопроса.<small>21:40</small></div>
-          <div class="m bot d3">Ответ готов. Главное в карте – …<small>21:41</small></div>
-          <div class="keys d4"><span>Почему так?</span><span>Уточнить</span></div>
-          <div class="keys d5"><span class="pay">Ещё вопрос – 299 ₽ по СБП</span></div>
-          <div class="paid d6">Оплата прошла, доступ открыт</div>
+    <div class="scene" id="scene" aria-label="Один и тот же бот по очереди в Telegram, ВКонтакте и MAX, рядом – шаги процесса в n8n">
+      <div class="nets" role="tablist" aria-label="Мессенджер">
+        <button type="button" data-net="0" class="on">Telegram<i></i></button>
+        <button type="button" data-net="1">ВКонтакте<i></i></button>
+        <button type="button" data-net="2">MAX<i></i></button>
+      </div>
+      <div class="chatphone" aria-hidden="true">
+        <div class="bar"><span class="ava">ИВ</span><span class="who"><b>Ирина Владимировна</b><i id="netName">ИИ-астролог, бот в Telegram</i></span></div>
+        <div class="msgs" id="msgs">
+          <div class="m me" data-s="0"><span id="q">Получу ли я эту работу?</span><small id="t1">21:40</small></div>
+          <div class="typing" data-s="1"><i></i><i></i><i></i></div>
+          <div class="m bot" data-s="2">Вопрос записала. Строю карту на минуту вопроса.<small id="t2">21:40</small></div>
+          <div class="typing" data-s="3"><i></i><i></i><i></i></div>
+          <div class="m bot" data-s="4">Ответ готов. Главное в карте – …<small id="t3">21:41</small></div>
+          <div class="keys" data-s="5"><span>Почему так?</span><span>Уточнить</span></div>
+          <div class="keys" data-s="6"><span class="pay">Ещё вопрос – 299 ₽ по СБП</span></div>
+          <div class="paid" data-s="7">Оплата прошла, доступ открыт</div>
         </div>
       </div>
       <ol class="trace" id="trace">
-        <li><b>Telegram, ВК или MAX</b>Вопрос пришёл, n8n принял его по вебхуку</li>
+        <li><b id="trNet">Telegram</b>Вопрос пришёл, n8n принял его по вебхуку</li>
         <li><b>Таблица бота</b>Проверяю, сколько бесплатных вопросов осталось</li>
         <li><b>Расчёт</b>Карта на минуту и место вопроса</li>
         <li><b>ИИ</b>Толкование по правилам, которые я прописала</li>
         <li><b>Кнопки</b>«Почему так?» и уточнения</li>
         <li class="money"><b>ЮKassa</b>Счёт по СБП, после оплаты – доступ и сообщение владельцу</li>
+        <span class="packet" id="packet"></span>
       </ol>
-      <p class="cap">Так выглядит разговор с ботом, текст ответа здесь сокращён. По шагам – что в это время делает процесс в n8n.</p>
+      <p class="cap">Так выглядит разговор, текст ответа здесь сокращён. Сценарий один, мессенджеры три – у каждого свой процесс в n8n и свой магазин ЮKassa.</p>
     </div>
   </section>
 </div>
 
 <section class="part" id="projects"><div class="wrap">
-  <div class="head">
+  <div class="head reveal">
     <h2>Свой проект от бота до роликов</h2>
     <p>ИИ-астролог Ирина Владимировна – мой учебный и рабочий полигон. На нём я собрала всё, что умею: бота с оплатой в трёх мессенджерах и контент-завод, который выкладывает ролики без меня.</p>
   </div>
 
-  <article class="case">
+  <article class="case reveal">
     <div>
       <h3>Бот-консультант с оплатой в трёх мессенджерах</h3>
       <p class="sub">n8n, Telegram, ВКонтакте, MAX, ЮKassa</p>
       <p class="about">Человек задаёт вопрос, бот сам считает карту, отвечает через ИИ и объясняет ответ. Первый вопрос бесплатный, следующие – платные: бот выставляет счёт и открывает доступ после оплаты.</p>
+      <div class="nums">
+        <div><b data-count="3">3</b>мессенджера, один сценарий</div>
+        <div><b data-count="3">3</b>магазина ЮKassa</div>
+        <div><b data-count="299" data-suffix=" ₽">299 ₽</b>платный вопрос по СБП</div>
+      </div>
       <ul class="did">
         <li>Один и тот же сценарий работает в Telegram, ВКонтакте и MAX – три процесса n8n, правки вношу во все три.</li>
-        <li>Оплата через ЮKassa по СБП: отдельный магазин на каждый мессенджер, уведомления об оплате приходят в n8n, владельцу – сообщение о новой оплате.</li>
+        <li>Оплата через ЮKassa по СБП: уведомления об оплате приходят в n8n, владельцу – сообщение о новой оплате.</li>
         <li>Пользователи, вопросы и оплаты хранятся в Google Таблице: бот помнит, сколько бесплатных вопросов осталось.</li>
         <li>Разбираю журнал запусков, когда человек застрял: например, бот терял вопрос, если его писали до города – теперь вопрос сохраняется.</li>
         <li>Перед каждой правкой сохраняю копию процесса, чтобы можно было откатить.</li>
@@ -271,7 +349,7 @@ footer a{color:var(--ink-2)}
         <a class="btn btn-line" href="https://irina-horar.ru" target="_blank" rel="noopener">Сайт irina-horar.ru</a>
       </div>
     </div>
-    <aside class="flow">
+    <aside class="flow" data-flow>
       <h4>Как идёт платный вопрос</h4>
       <p class="hint">Проверено живой оплатой 05.11.2026 во ВКонтакте</p>
       <ol>
@@ -282,13 +360,18 @@ footer a{color:var(--ink-2)}
       </ol>
       <div class="tools"><span>n8n</span><span>Вебхуки</span><span>ЮKassa API</span><span>Telegram Bot API</span><span>ВКонтакте API</span><span>MAX</span><span>Google Таблицы</span></div>
     </aside>
+    <figure class="vphone"><span class="live">запись экрана</span><video src="assets/irina-chat.mp4" poster="assets/irina-chat.jpg" muted loop playsinline preload="none" aria-label="Запись экрана: вопрос боту, карта, ответ и кнопка «Почему так?»"></video><figcaption>Настоящая переписка, ускорено в 2 раза</figcaption></figure>
   </article>
 
-  <article class="case">
+  <article class="case reveal">
     <div>
       <h3>Контент-завод: ролики и посты без ручной выкладки</h3>
       <p class="sub">n8n, ИИ, HeyGen, Google Таблицы</p>
       <p class="about">Ролики с ИИ-аватаром эксперта делаются и выходят по расписанию. Моя часть – собрать процесс и следить за ним, а не сидеть над каждым роликом.</p>
+      <div class="nums">
+        <div><b data-count="4.4" data-dec="1" data-suffix=" тыс.">4,4 тыс.</b>просмотров на YouTube за 28 дней</div>
+        <div><b data-count="36">36</b>подписчиков за первые 3 недели</div>
+      </div>
       <ul class="did">
         <li>n8n находит популярные ролики на YouTube, ИИ пишет по ним свои сценарии – по одной строке за запуск, зависшие строки сами возвращаются в очередь.</li>
         <li>HeyGen делает видео с ИИ-аватаром, образы аватара меняются по очереди сами.</li>
@@ -297,12 +380,8 @@ footer a{color:var(--ink-2)}
         <li>Отдельный процесс дважды в день проверяет выкладку и пишет мне только о сбоях.</li>
         <li>На всех ссылках метки: вижу, откуда люди приходят в бота.</li>
       </ul>
-      <div class="nums">
-        <div><b>4,4 тыс.</b>просмотров на YouTube за 28 дней</div>
-        <div><b>36</b>подписчиков за первые 3 недели</div>
-      </div>
     </div>
-    <aside class="flow">
+    <aside class="flow" data-flow>
       <h4>Путь одного ролика</h4>
       <p class="hint">Очередь и статусы – в Google Таблице</p>
       <ol>
@@ -314,46 +393,54 @@ footer a{color:var(--ink-2)}
       </ol>
       <div class="tools"><span>n8n</span><span>HeyGen</span><span>YouTube</span><span>Rutube</span><span>Google Таблицы</span><span>Автопостинг</span></div>
     </aside>
+    <figure class="vphone natural"><span class="live">ролик с завода</span><video src="assets/rolik.mp4" poster="assets/rolik.jpg" muted loop playsinline preload="none" aria-label="Отрывок ролика с ИИ-аватаром"></video><figcaption>Отрывок готового ролика, без звука</figcaption></figure>
   </article>
 </div></section>
 
 <section class="part"><div class="wrap">
-  <div class="head">
+  <div class="head reveal">
     <h2>Другие боты и автоматизации</h2>
     <p>Собраны на курсах и для себя. Каждый доведён до рабочего состояния и проверен в мессенджере.</p>
   </div>
+  <div class="duo">
+    <article class="vproj reveal">
+      <div>
+        <h3>ИИ-секретарь в Telegram</h3>
+        <p>Владелец наговаривает голосовое: «Запиши Марину Козлову на четверг в 19:00». Бот находит контакт, ставит встречу и отвечает, на какое время записал. Утром присылает план дня, напоминает о делах.</p>
+        <div class="chain" data-chain><span>Голосовое</span><span>Текст через Groq</span><span>Контакт из Google Таблицы</span><span>Встреча в Календаре через MCP</span><span>Письмо в Gmail</span></div>
+        <div class="tools"><span>n8n</span><span>MCP</span><span>Google Календарь</span><span>Gmail API</span><span>Groq</span><span>Postgres</span></div>
+      </div>
+      <figure class="vphone"><span class="live">запись экрана</span><video src="assets/sekretar.mp4" poster="assets/sekretar.jpg" muted loop playsinline preload="none" aria-label="Запись экрана: секретарь ставит встречу и напоминание"></video><figcaption>Запись экрана</figcaption></figure>
+    </article>
+    <article class="vproj reveal">
+      <div>
+        <h3>ИИ-ассистент по документам (RAG)</h3>
+        <p>Бот отвечает строго по загруженным документам и не выдумывает: сроки, цены, скидки, возвраты. На видео – демо для онлайн-школы.</p>
+        <div class="chain" data-chain><span>PDF в Google Диске</span><span>Векторная база Supabase</span><span>Агент находит нужный кусок</span><span>Ответ в Telegram</span></div>
+        <div class="tools"><span>n8n</span><span>RAG</span><span>Supabase</span><span>Google Диск</span><span>ИИ-агенты</span></div>
+      </div>
+      <figure class="vphone natural"><span class="live">запись экрана</span><video src="assets/rag.mp4" poster="assets/rag.jpg" muted loop playsinline preload="none" aria-label="Запись экрана: бот отвечает по правилам школы"></video><figcaption>Запись экрана</figcaption></figure>
+    </article>
+  </div>
   <div class="more">
-    <article class="proj">
-      <h3>ИИ-секретарь в Telegram</h3>
-      <p>Владелец наговаривает боту голосовое: «Запиши Марину Козлову на четверг в 19:00». Бот находит контакт, ставит встречу и отвечает, на какое время записал.</p>
-      <p class="chain">Голосовое<i>›</i>текст через Groq<i>›</i>контакт из Google Таблицы<i>›</i>встреча в Календаре через MCP<i>›</i>письмо в Gmail</p>
-      <p>Утром присылает план дня, напоминает о делах.</p>
-      <div class="tools"><span>n8n</span><span>MCP</span><span>Google Календарь</span><span>Gmail API</span><span>Groq</span><span>Postgres</span></div>
-    </article>
-    <article class="proj">
-      <h3>ИИ-ассистент по документам (RAG)</h3>
-      <p>Бот отвечает строго по загруженным документам и не выдумывает. Подходит для прайса, регламентов и правил компании.</p>
-      <p class="chain">PDF в Google Диске<i>›</i>векторная база Supabase<i>›</i>агент находит нужный кусок<i>›</i>ответ в Telegram</p>
-      <div class="tools"><span>n8n</span><span>RAG</span><span>Supabase</span><span>Google Диск</span><span>ИИ-агенты</span></div>
-    </article>
-    <article class="proj">
+    <article class="proj reveal">
       <h3>Бот-продавец на Cloudflare</h3>
       <p>Показывает работы со снимками и цены, задаёт вопросы брифа, спрашивает согласие на обработку данных и присылает владельцу готовую заявку. На свободные вопросы отвечает нейросеть – только по фактам с витрины.</p>
       <div class="tools"><span>Cloudflare Workers</span><span>Telegram Bot API</span><span>ChatGPT</span></div>
       <a href="https://t.me/vinera_saity_bot" target="_blank" rel="noopener">Открыть @vinera_saity_bot</a>
     </article>
-    <article class="proj">
+    <article class="proj reveal">
       <h3>ИИ-помощник для ателье</h3>
       <p>Отвечает клиентам про цены, сроки и запись в любое время. Клиент написал в 21:40 – помощник ответил в 21:40.</p>
       <div class="tools"><span>n8n</span><span>Промпт-инжиниринг</span><span>Telegram</span></div>
       <a href="https://t.me/iglaniti_demo_bot" target="_blank" rel="noopener">Открыть @iglaniti_demo_bot</a>
     </article>
-    <article class="proj">
+    <article class="proj reveal">
       <h3>Радар заказов</h3>
       <p>Каждое утро в 07:00 читает выбранные Telegram-каналы и ленту Kwork, отбирает подходящие заказы и присылает сводку с черновиками откликов в бота. По пятницам – итоги недели.</p>
       <div class="tools"><span>Node.js</span><span>Telegram</span><span>Задачи по расписанию</span></div>
     </article>
-    <article class="proj">
+    <article class="proj reveal">
       <h3>Сайты-лендинги</h3>
       <p>Одностраничные сайты для малого бизнеса с заявкой в Telegram: собираю в Claude Code, публикую на GitHub Pages или переношу в Тильду.</p>
       <div class="tools"><span>Claude Code</span><span>HTML и CSS</span><span>Тильда</span><span>GitHub Pages</span></div>
@@ -363,13 +450,13 @@ footer a{color:var(--ink-2)}
 </div></section>
 
 <section class="part"><div class="wrap">
-  <div class="head">
+  <div class="head reveal">
     <h2>С чем работаю</h2>
     <p>Всё, что ниже, я подключала сама в своих проектах.</p>
   </div>
-  <div class="skills">
+  <div class="skills reveal">
     <div><h3>Сборка процессов</h3><p>n8n, вебхуки, работа с API, задачи по расписанию, журнал запусков и откат версий</p></div>
-    <div><h3>Мессенджеры</h3><p>Telegram Bot API, ВКонтакте API, MAX, кнопки, оплата, рассылка владельцу</p></div>
+    <div><h3>Мессенджеры</h3><p>Telegram Bot API, ВКонтакте API, MAX, кнопки, оплата, сообщения владельцу</p></div>
     <div><h3>ИИ</h3><p>ChatGPT, Gemini, Claude Code, ИИ-агенты, RAG, MCP, промпт-инжиниринг</p></div>
     <div><h3>Данные</h3><p>Google Таблицы, Supabase, Postgres для памяти агента, Google Диск</p></div>
     <div><h3>Оплата и сервисы</h3><p>ЮKassa по СБП, Google Календарь, Gmail, Cloudflare Workers</p></div>
@@ -378,11 +465,11 @@ footer a{color:var(--ink-2)}
 </div></section>
 
 <section class="part"><div class="wrap">
-  <div class="head">
+  <div class="head reveal">
     <h2>Как я работаю</h2>
     <p>Сильная сторона у меня – техническая часть. Продажи и переговоры с клиентами оставляю тем, кто это умеет.</p>
   </div>
-  <ol class="steps">
+  <ol class="steps reveal">
     <li><b>Разбираюсь</b><span>Где у людей уходит время на ручную работу</span></li>
     <li><b>Собираю</b><span>Процесс в n8n и бота под задачу</span></li>
     <li><b>Проверяю</b><span>Каждую функцию на живых данных, в самом мессенджере</span></li>
@@ -392,11 +479,11 @@ footer a{color:var(--ink-2)}
 </div></section>
 
 <section class="part"><div class="wrap">
-  <div class="head">
+  <div class="head reveal">
     <h2>Обучение</h2>
     <p>Учусь ИИ и автоматизации с мая 2026 года.</p>
   </div>
-  <div class="edu">
+  <div class="edu reveal">
     <div><b>«Разработка автоматизированных контентных систем»</b><span>Диплом о профессиональной переподготовке, 256 ч. ООО «Академия Интернет-Маркетинга», 31.10.2026</span></div>
     <div><b>«Проектирование и внедрение ИИ-агентов»</b><span>Удостоверение о повышении квалификации, 72 ч. ООО «Академия Интернет-Маркетинга», 15.10.2026</span></div>
     <div><b>«Вайб-сайты»</b><span>Сайты, боты-продавцы и радар заказов с Claude Code. Прохожу сейчас, aimschool.ru</span></div>
@@ -404,14 +491,14 @@ footer a{color:var(--ink-2)}
 </div></section>
 
 <section class="part" id="contact"><div class="wrap">
-  <div class="final">
+  <div class="final reveal">
     <div>
       <h2>Нужен бот или автоматизация&nbsp;– напишите</h2>
       <p>Беру постоянную удалённую работу на одну компанию и отдельные проекты. Вы пишете задачу – я задаю вопросы, собираю, проверяю каждую функцию и дальше поддерживаю.</p>
       <p class="terms">Удалённо. ИП на НПД, договор ГПХ.</p>
     </div>
     <div class="side">
-      <a class="btn btn-main" id="mail" href="mailto:vinera.ai@yandex.ru">Написать на vinera.ai@yandex.ru</a>
+      <a class="btn btn-main" href="mailto:vinera.ai@yandex.ru">Написать на vinera.ai@yandex.ru</a>
       <a class="btn btn-line" href="https://t.me/moy_horar_bot?start=hh_vitrina" target="_blank" rel="noopener">Проверить бота Ирины</a>
     </div>
   </div>
@@ -425,12 +512,143 @@ footer a{color:var(--ink-2)}
 
 <script>
 (function(){
-  var items=[].slice.call(document.querySelectorAll('#trace li'));
-  if(!items.length)return;
-  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduce){items.forEach(function(li){li.classList.add('on')});return;}
-  var times=[300,900,1700,2400,3200,4200];
-  items.forEach(function(li,i){setTimeout(function(){li.classList.add('on')},times[i]||i*800)});
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var top = document.querySelector('.top');
+  addEventListener('scroll', function(){ top.classList.toggle('scrolled', scrollY > 8); }, {passive:true});
+
+  /* ---------- первый экран: три мессенджера по очереди ---------- */
+  var NETS = [
+    {name:'Telegram', color:'#2E9BD6', q:'Получу ли я эту работу?', t:['21:40','21:40','21:41']},
+    {name:'ВКонтакте', color:'#2D6FE0', q:'Помиримся ли мы с ним?', t:['09:15','09:15','09:16']},
+    {name:'MAX', color:'#7A5AE0', q:'Стоит ли ждать его сообщения?', t:['14:02','14:02','14:03']}
+  ];
+  // шаг разговора -> какой шаг процесса горит
+  var PLAN = [ // [задержка мс, шаг разговора, шаг процесса]
+    [400,0,0],[700,1,1],[1300,2,2],[700,3,3],[1400,4,3],[900,5,4],[1100,6,5],[1200,7,5]
+  ];
+  var LOOP = PLAN.reduce(function(s,p){return s+p[0];},0) + 2600;
+  var scene = document.getElementById('scene');
+  var msgs = document.getElementById('msgs');
+  var parts = [].slice.call(msgs.children);
+  var trace = [].slice.call(document.querySelectorAll('#trace li'));
+  var packet = document.getElementById('packet');
+  var btns = [].slice.call(document.querySelectorAll('.nets button'));
+  var net = 0, timers = [], running = false, visible = true;
+  scene.style.setProperty('--loop', LOOP + 'ms');
+
+  function clear(){ timers.forEach(clearTimeout); timers = []; }
+  function at(ms, fn){ timers.push(setTimeout(fn, ms)); }
+  function setNet(i){
+    var n = NETS[i];
+    document.documentElement.style.setProperty('--net', n.color);
+    document.getElementById('q').textContent = n.q;
+    document.getElementById('t1').textContent = n.t[0];
+    document.getElementById('t2').textContent = n.t[1];
+    document.getElementById('t3').textContent = n.t[2];
+    document.getElementById('netName').textContent = 'ИИ-астролог, бот в ' + (i===1 ? 'ВКонтакте' : n.name);
+    document.getElementById('trNet').textContent = n.name;
+    btns.forEach(function(b,k){ b.classList.toggle('on', k===i); b.classList.toggle('done', k<i); b.setAttribute('aria-selected', k===i); });
+    // перезапуск полоски
+    var bar = btns[i].querySelector('i'); bar.style.animation='none'; void bar.offsetWidth; bar.style.animation='';
+  }
+  function lightTrace(k){
+    trace.forEach(function(li,j){ li.classList.toggle('on', j<=k); });
+    var li = trace[k];
+    packet.style.top = (li.offsetTop + 12) + 'px';
+    packet.classList.add('go');
+    packet.classList.toggle('money', li.classList.contains('money'));
+  }
+  function showStep(s){
+    parts.forEach(function(p){
+      var ps = +p.dataset.s;
+      if (p.classList.contains('typing')) p.classList.toggle('show', ps===s);
+      else if (ps<=s) p.classList.add('show');
+    });
+  }
+  function resetChat(){
+    parts.forEach(function(p){ p.classList.remove('show'); });
+    trace.forEach(function(li){ li.classList.remove('on'); });
+    packet.classList.remove('go','money'); packet.style.top='14px';
+  }
+  function play(i){
+    clear(); net = i; running = true;
+    resetChat(); msgs.classList.remove('fade'); setNet(i);
+    var t = 0;
+    PLAN.forEach(function(p){ t += p[0]; at(t, function(){ showStep(p[1]); lightTrace(p[2]); }); });
+    at(t + 2000, function(){ msgs.classList.add('fade'); });
+    at(t + 2600, function(){ if (visible) play((net + 1) % NETS.length); else running = false; });
+  }
+  btns.forEach(function(b,k){ b.addEventListener('click', function(){ play(k); }); });
+
+  if (reduce){
+    setNet(0); parts.forEach(function(p){ if(!p.classList.contains('typing')) p.classList.add('show'); });
+    trace.forEach(function(li){ li.classList.add('on'); });
+  } else {
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){ visible = e.isIntersecting; if (visible && !running) play(net); });
+    }, {threshold:.25}).observe(scene);
+  }
+
+  /* ---------- схемы: шаги загораются по очереди ---------- */
+  function runFlow(el){
+    var lis = [].slice.call(el.querySelectorAll('li')), k = -1;
+    function tick(){
+      if (!el._vis) { el._run = false; return; }
+      k++;
+      if (k >= lis.length){ el._t = setTimeout(function(){ lis.forEach(function(l){ l.classList.remove('on','cur'); }); k=-1; el._t=setTimeout(tick,600); }, 2200); return; }
+      lis.forEach(function(l,j){ l.classList.toggle('on', j<=k); l.classList.toggle('cur', j===k); });
+      el._t = setTimeout(tick, 1150);
+    }
+    el._run = true; tick();
+  }
+  function runChain(el){
+    var sp = [].slice.call(el.children), k = -1;
+    function tick(){
+      if (!el._vis){ el._run=false; return; }
+      k = (k + 1) % (sp.length + 2);
+      sp.forEach(function(s,j){ s.classList.toggle('on', j<=k && k<sp.length); });
+      el._t = setTimeout(tick, k>=sp.length ? 900 : 800);
+    }
+    el._run = true; tick();
+  }
+
+  /* ---------- цифры считаются ---------- */
+  function count(b){
+    var to = parseFloat(b.dataset.count), dec = +(b.dataset.dec||0), suf = b.dataset.suffix||'';
+    var start = performance.now(), dur = 1400;
+    function f(now){
+      var p = Math.min(1,(now-start)/dur), e = 1-Math.pow(1-p,3), v = to*e;
+      b.textContent = (dec ? v.toFixed(dec).replace('.',',') : Math.round(v)) + suf;
+      if (p<1) requestAnimationFrame(f);
+    }
+    requestAnimationFrame(f);
+  }
+
+  /* ---------- общий наблюдатель ---------- */
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      var el = e.target;
+      if (el.classList.contains('reveal') && e.isIntersecting){ el.classList.add('in'); }
+      if (el.tagName === 'VIDEO'){
+        var fig = el.parentNode;
+        if (e.isIntersecting){ el.preload='auto'; var pr = el.play(); if (pr && pr.catch) pr.catch(function(){}); fig.classList.add('playing'); }
+        else { el.pause(); fig.classList.remove('playing'); }
+      }
+      if (el.hasAttribute('data-flow') || el.hasAttribute('data-chain')){
+        el._vis = e.isIntersecting;
+        if (el._vis && !el._run){ el.hasAttribute('data-flow') ? runFlow(el) : runChain(el); }
+      }
+      if (el.dataset && el.dataset.count && e.isIntersecting && !el._done){ el._done = true; count(el); }
+    });
+  }, {threshold:.2});
+
+  if (reduce){
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+    document.querySelectorAll('[data-flow] li,[data-chain] span').forEach(function(el){ el.classList.add('on'); });
+    document.querySelectorAll('video').forEach(function(v){ v.removeAttribute('loop'); v.controls = true; });
+  } else {
+    document.querySelectorAll('.reveal,video,[data-flow],[data-chain],[data-count]').forEach(function(el){ io.observe(el); });
+  }
 })();
 </script>
 </body>
